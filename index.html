@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ali Studio</title>
+    <meta
+      name="description"
+      content="Ali Studio - منصة تصميم وتطوير رقمية تجمع بين الإبداع والهوية التجارية."
+    />
+    <style>
+      :root {
+        --bg: #07080c;
+        --bg2: #0e1016;
+        --ivory: #f1e6c8;
+        --gold: #d8b46c;
+        --gold2: #a88442;
+        --text: #ece6d6;
+        --muted: #a59f90;
+        --glass: rgba(22, 24, 32, 0.55);
+        --line: rgba(216, 180, 108, 0.22);
+        --shadow: rgba(0, 0, 0, 0.35);
+      }
+
+      * { box-sizing: border-box; }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 72px;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Cairo", "Segoe UI", Tahoma, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.8;
+        background-image:
+          radial-gradient(900px 500px at 70% -10%, rgba(216, 180, 108, 0.13), transparent 60%),
+          radial-gradient(700px 500px at 0% 100%, rgba(216, 180, 108, 0.07), transparent 60%);
+      }
+
+      a { color: inherit; text-decoration: none; }
+
+      img { max-width: 100%; display: block; }
+
+      .container {
+        width: min(1200px, calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(7, 8, 12, 0.72);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .header-inner {
+        height: 78px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+      }
+
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, rgba(216, 180, 108, 0.2), rgba(216, 180, 108, 0.05));
+        border: 1px solid var(--line);
+        box-shadow: 0 0 25px rgba(216, 180, 108, 0.2);
+        font-size: 1.1rem;
+        color: var(--gold);
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        color: var(--muted);
+        padding: 8px 12px;
+        border-radius: 999px;
+        transition: 0.2s ease;
+      }
+
+      nav a:hover,
+      nav a.active {
+        color: var(--ivory);
+        background: rgba(216, 180, 108, 0.12);
+      }
+
+      .lang-switch {
+        position: relative;
+        direction: ltr;
+      }
+
+      .lang-btn {
+        min-height: 36px;
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid var(--line);
+        color: var(--gold);
+        border-radius: 999px;
+        padding: 0 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+      }
+
+      .lang-btn svg {
+        width: 10px;
+        height: 8px;
+        transition: transform 0.2s ease;
+      }
+
+      .lang-switch.open .lang-btn svg {
+        transform: rotate(180deg);
+      }
+
+      .lang-menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        min-width: 96px;
+        list-style: none;
+        background: rgba(14, 16, 22, 0.96);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 6px;
+        margin: 0;
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .lang-menu[hidden] { display: none; }
+
+      .lang-menu button {
+        width: 100%;
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        border-radius: 10px;
+        padding: 8px 10px;
+        font: inherit;
+        cursor: pointer;
+        color: var(--muted);
+      }
+
+      .lang-menu button:hover,
+      .lang-menu button.active {
+        color: var(--ivory);
+        background: rgba(216, 180, 108, 0.1);
+      }
+
+      main { padding-bottom: 50px; }
+
+      .section {
+        display: none;
+        padding-top: 40px;
+      }
+
+      .section.active {
+        display: block;
+        animation: in 0.45s both;
+      }
+
+      @keyframes in {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hero {
+        min-height: calc(100vh - 170px);
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 42px 0 22px;
+      }
+
+      .hero-badge {
+        display: inline-block;
+        color: var(--gold);
+        background: rgba(216, 180, 108, 0.08);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 6px 14px;
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+      }
+
+      .hero-logo {
+        width: min(46vw, 260px);
+        height: auto;
+        filter: drop-shadow(0 24px 40px rgba(216, 180, 108, 0.25));
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        50% { transform: translateY(-10px) rotateY(10deg); }
+      }
+
+      h1 {
+        margin: 16px 0 10px;
+        font-size: clamp(2.2rem, 7vw, 4.4rem);
+        line-height: 1.15;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        background: linear-gradient(180deg, var(--ivory), var(--gold));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .tagline {
+        margin: 0 auto;
+        max-width: 36ch;
+        color: var(--muted);
+        font-size: clamp(1rem, 2.8vw, 1.25rem);
+      }
+
+      .cta-row {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 26px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: 0.2s ease;
+        border: 1px solid var(--gold);
+      }
+
+      .btn.primary {
+        color: #14110a;
+        background: linear-gradient(135deg, var(--ivory), var(--gold));
+        border-color: transparent;
+      }
+
+      .btn.secondary {
+        color: var(--ivory);
+        background: transparent;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(216, 180, 108, 0.2);
+      }
+
+      h2 {
+        font-size: clamp(1.6rem, 5vw, 2.4rem);
+        margin: 40px 0 10px;
+        color: var(--ivory);
+      }
+
+      .lead {
+        color: var(--muted);
+        max-width: 60ch;
+        margin: 0 0 26px;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 18px;
+        padding-bottom: 24px;
+      }
+
+      .card {
+        background: var(--glass);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 22px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(241, 230, 200, 0.1);
+        transition: transform 0.25s ease, border-color 0.25s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        border-color: var(--gold2);
+      }
+
+      .card-art {
+        aspect-ratio: 16 / 10;
+        border-radius: 12px;
+        border: 1px dashed var(--line);
+        display: grid;
+        place-items: center;
+        color: var(--muted);
+        font-size: 0.85rem;
+        margin-bottom: 14px;
+        background: rgba(0, 0, 0, 0.3);
+      }
+
+      .card h3 {
+        margin: 0 0 8px;
+        color: var(--ivory);
+      }
+
+      .card p {
+        margin: 0 0 10px;
+        color: var(--muted);
+      }
+
+      .badge {
+        display: inline-block;
+        font-size: 0.8rem;
+        padding: 2px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        color: var(--gold);
+      }
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 18px;
+        margin-top: 18px;
+      }
+
+      .about-card {
+        background: var(--glass);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 24px 26px;
+      }
+
+      .about-card h3 {
+        margin: 0 0 12px;
+        color: var(--gold);
+      }
+
+      .about-card p {
+        margin: 0;
+        color: var(--text);
+        line-height: 1.95;
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .form-wrap {
+        background: var(--glass);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 22px;
+      }
+
+      label {
+        display: block;
+        margin: 14px 0 6px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      input, textarea {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px 14px;
+        color: var(--text);
+        font: inherit;
+      }
+
+      textarea {
+        min-height: 130px;
+        resize: vertical;
+      }
+
+      input:focus, textarea:focus {
+        outline: none;
+        border-color: var(--gold);
+      }
+
+      .form-status {
+        min-height: 1.6em;
+        margin-top: 12px;
+        font-size: 0.95rem;
+      }
+
+      .form-status.error { color: #ff9d8a; }
+      .form-status.ok { color: var(--gold); }
+
+      .social {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 18px;
+      }
+
+      .social a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 40px;
+        padding: 0 16px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(216, 180, 108, 0.06);
+        color: var(--gold);
+        font-weight: 600;
+      }
+
+      .social a:hover {
+        color: var(--ivory);
+        border-color: var(--gold);
+        transform: translateY(-2px);
+      }
+
+      .note {
+        color: var(--muted);
+        font-size: 0.9rem;
+        border: 1px dashed var(--line);
+        border-radius: 12px;
+        padding: 12px 14px;
+        background: rgba(0, 0, 0, 0.15);
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 30px 0 24px;
+        text-align: center;
+        color: var(--muted);
+      }
+
+      .footer-nav {
+        justify-content: center;
+      }
+
+      .copy {
+        margin-top: 16px;
+        font-size: 0.78rem;
+        opacity: 0.75;
+      }
+
+      @media (max-width: 700px) {
+        .header-inner {
+          flex-wrap: wrap;
+          height: auto;
+          padding: 12px 0;
+        }
+
+        .brand {
+          flex: 1;
+        }
+
+        nav {
+          order: 3;
+          width: 100%;
+          justify-content: center;
+        }
+
+        .lang-switch {
+          order: 2;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container header-inner">
+        <a class="brand" href="#home" data-target="home">
+          <span class="brand-mark">A</span>
+          <span>Ali Studio</span>
+        </a>
+
+        <nav aria-label="Main navigation">
+          <a href="#home" class="active" data-target="home">الرئيسية</a>
+          <a href="#games" data-target="games">الأعمال</a>
+          <a href="#about" data-target="about">من نحن</a>
+          <a href="#contact" data-target="contact">تواصل</a>
+        </nav>
+
+        <div class="lang-switch" id="langSwitch">
+          <button class="lang-btn" type="button" id="langBtn" aria-expanded="false">
+            <span id="langCurrent">AR</span>
+            <svg viewBox="0 0 10 6" aria-hidden="true">
+              <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <ul class="lang-menu" id="langMenu" hidden>
+            <li><button type="button" class="active" data-lang="ar">AR</button></li>
+            <li><button type="button" data-lang="en">EN</button></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="section active">
+        <div class="container hero">
+          <div>
+            <span class="hero-badge">Ali Studio</span>
+            <img class="hero-logo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 260'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop stop-color='%23f1e6c8'/%3E%3Cstop offset='1' stop-color='%23d8b46c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='260' height='260' rx='46' fill='%230b0d12'/%3E%3Ccircle cx='130' cy='130' r='90' fill='%230e1016' stroke='url(%23g)' stroke-width='6'/%3E%3Cpath d='M84 174c14-40 28-60 46-60 18 0 32 20 46 60' fill='none' stroke='url(%23g)' stroke-width='12' stroke-linecap='round'/%3E%3Cpath d='M93 96h74' stroke='url(%23g)' stroke-width='12' stroke-linecap='round'/%3E%3Cpath d='M112 116h36' stroke='url(%23g)' stroke-width='12' stroke-linecap='round'/%3E%3C/svg%3E" alt="Ali Studio" />
+            <h1>Ali Studio</h1>
+            <p class="tagline">نحو تجارب رقمية قوية، أنيقة ومتجذرة في هوية علامتك التجارية.</p>
+            <div class="cta-row">
+              <a class="btn primary" href="#contact">ابدأ مشروعك</a>
+              <a class="btn secondary" href="#games">استعراض الأعمال</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="games" class="section">
+        <div class="container">
+          <h2>أعمالنا</h2>
+          <p class="lead">نصمم تجارب رقمية مميزة تجمع بين المظهر الجذاب والوظيفة الواضحة، مع تركيز كبير على الاحتراف والتفاصيل.</p>
+
+          <div class="cards">
+            <article class="card">
+              <div class="card-art">Brand Identity</div>
+              <span class="badge">تصميم</span>
+              <h3>هوية العلامة التجارية</h3>
+              <p>تصاميم مخصصة تبرز شخصيتك وتبني ثقة العملاء في أول لمسة.</p>
+            </article>
+
+            <article class="card">
+              <div class="card-art">UI / UX</div>
+              <span class="badge">تجربة</span>
+              <h3>واجهة مستخدم</h3>
+              <p>تجارب بديهية وسهلة التفاعل، مصممة لتحسين الاحتفاظ وتجربة الزائر.</p>
+            </article>
+
+            <article class="card">
+              <div class="card-art">Web Apps</div>
+              <span class="badge">تطوير</span>
+              <h3>مواقع وتطبيقات</h3>
+              <p>حلول مواقع إلكترونية حديثة ومشاريع رقمية قابلة للتوسع مع الجودة العالية.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="container">
+          <h2>من نحن</h2>
+          <p class="lead">Ali Studio هي مساحة إبداعية تجمع بين التصميم والتطوير، موجهة لدعم الأعمال الناشئة والمنظمات الراغبة في بناء حضور رقمي قوي.</p>
+
+          <div class="about-grid">
+            <div class="about-card">
+              <h3>رؤيتنا</h3>
+              <p>نؤمن أن كل علامة تجارية تحتاج إ��ى هوية متكاملة وقصص جذابة تلامس جمهورها بوضوح وثقة.</p>
+            </div>
+            <div class="about-card">
+              <h3>أولوياتنا</h3>
+              <p>الجودة، الوضوح، السرعة في التنفيذ، والمراجعة المستمرة لضمان نتائج عملية ومميزة.</p>
+            </div>
+            <div class="about-card">
+              <h3>ماذا نقدم</h3>
+              <p>خدمات branding، تصميم واجهات، تطوير مواقع، وإدارة محتوى تعكس رؤية العميل وتدعم نموه.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <div class="container">
+          <h2>تواصل معنا</h2>
+          <p class="lead">إذا كنت تبحث عن شريك رقمي يقدّم أفكاراً عملية ومبتكرة، تواصل معنا وسنعود إليك في أقرب وقت.</p>
+
+          <div class="contact-grid">
+            <div class="form-wrap">
+              <form id="contactForm">
+                <label for="name">الاسم</label>
+                <input id="name" name="name" type="text" placeholder="اكتب اسمك" required />
+
+                <label for="email">البريد الإلكتروني</label>
+                <input id="email" name="email" type="email" placeholder="name@example.com" required />
+
+                <label for="message">رسالتك</label>
+                <textarea id="message" name="message" placeholder="اكتب مشروعك أو فكرة عملك" required></textarea>
+
+                <button class="btn primary" style="margin-top:16px; border:none; cursor:pointer;" type="submit">إرسال</button>
+                <div id="formStatus" class="form-status" aria-live="polite"></div>
+              </form>
+            </div>
+
+            <div>
+              <div class="note">نرحب بكل المشاريع الصغيرة والكبيرة، سواء كانت فكرة أولية أو إعادة تصميم كاملة.</div>
+              <div class="social" style="margin-top:18px;">
+                <a href="mailto:hello@alistudio.example">Email</a>
+                <a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a>
+                <a href="https://x.com" target="_blank" rel="noreferrer">X</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="#home">الرئيسية</a>
+          <a href="#games">الأعمال</a>
+          <a href="#about">من نحن</a>
+          <a href="#contact">تواصل</a>
+        </nav>
+        <div class="copy">© 2026 Ali Studio — جميع الحقوق محفوظة</div>
+      </div>
+    </footer>
+
+    <script>
+      const navLinks = document.querySelectorAll('[data-target]');
+      const sections = document.querySelectorAll('.section');
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+          const targetId = link.getAttribute('data-target');
+          event.preventDefault();
+
+          sections.forEach(section => {
+            section.classList.toggle('active', section.id === targetId);
+          });
+
+          navLinks.forEach(item => item.classList.toggle('active', item.getAttribute('data-target') === targetId));
+
+          if (window.history && window.history.pushState) {
+            const url = '#' + targetId;
+            window.history.pushState({}, '', url);
+          }
+        });
+      });
+
+      const langSwitch = document.getElementById('langSwitch');
+      const langBtn = document.getElementById('langBtn');
+      const langMenu = document.getElementById('langMenu');
+      const langCurrent = document.getElementById('langCurrent');
+      const langOptions = document.querySelectorAll('[data-lang]');
+
+      langBtn.addEventListener('click', () => {
+        const isOpen = langSwitch.classList.toggle('open');
+        langBtn.setAttribute('aria-expanded', String(isOpen));
+        langMenu.hidden = !isOpen;
+      });
+
+      langOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          const lang = option.getAttribute('data-lang');
+          const isArabic = lang === 'ar';
+          document.documentElement.lang = isArabic ? 'ar' : 'en';
+          document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+          langCurrent.textContent = isArabic ? 'AR' : 'EN';
+          langOptions.forEach(item => item.classList.toggle('active', item === option));
+
+          document.querySelectorAll('nav a').forEach(link => {
+            const textMap = {
+              home: isArabic ? 'الرئيسية' : 'Home',
+              games: isArabic ? 'الأعمال' : 'Works',
+              about: isArabic ? 'من نحن' : 'About',
+              contact: isArabic ? 'تواصل' : 'Contact'
+            };
+            const key = link.getAttribute('data-target');
+            if (textMap[key]) link.textContent = textMap[key];
+          });
+
+          if (isArabic) {
+            document.querySelector('.hero .tagline').textContent = 'نحو تجارب رقمية قوية، أنيقة ومتجذرة في هوية علامتك التجارية.';
+            document.querySelector('.cta-row .btn.primary').textContent = 'ابدأ مشروعك';
+            document.querySelector('.cta-row .btn.secondary').textContent = 'استعراض الأعمال';
+          } else {
+            document.querySelector('.hero .tagline').textContent = 'Designs that blend identity, clarity, and digital impact.';
+            document.querySelector('.cta-row .btn.primary').textContent = 'Start your project';
+            document.querySelector('.cta-row .btn.secondary').textContent = 'View portfolio';
+          }
+
+          langSwitch.classList.remove('open');
+          langBtn.setAttribute('aria-expanded', 'false');
+          langMenu.hidden = true;
+        });
+      });
+
+      document.getElementById('contactForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const status = document.getElementById('formStatus');
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        if (!name || !email || !message) {
+          status.textContent = 'يرجى تعبئة جميع الحقول قبل الإرسال.';
+          status.className = 'form-status error';
+          return;
+        }
+
+        status.textContent = 'تم إرسال رسالتك بنجاح. سنعاود التواصل معك قريباً.';
+        status.className = 'form-status ok';
+        event.target.reset();
+      });
+    </script>
+  </body>
+</html>
